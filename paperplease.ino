@@ -1,5 +1,4 @@
-#include <stdint.h>
-#include <string.h>
+#include <Arduino.h>
 
 #include <ESP8266WiFi.h>
 

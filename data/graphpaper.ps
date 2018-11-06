@@ -1,105 +1,105 @@
-%!
-
-%
-% graphpaper.ps  version 1.0
-% (c) 2001 Jason Pratt; All rights reserved
-% Free to use and redistribute.
-% http://www.jasonpratt.org/software/graphpaper/
-%
-
-%
-% How to use this program:
-%
-% Send it to a printer.  The printer will know what to do.
-%
-% On Windows: Start->Settings->Printers, then drag this file onto
-%             a printer icon.  If that doesn't work, try downloading
-%             this program: http://www.cs.wisc.edu/~ghost/
-% On UNIX: lpr [-Pprinter] graphpaper.ps
-% On Macintosh: If you have a printer icon on your desktop, drag
-%               graphpaper.ps onto it.  Or, try this:
-%               select graphpaper.ps, then click File->Print.
-%               If those don't work, try downloading this program:
-%               http://www.cs.wisc.edu/~ghost/
-%
-% If you have better instructions for printing postscript on any
-% platform, please let me know: jason@jasonpratt.org
-%
-%
-% If you're feeling frisky, you can play with the options below
-%
-
-
-%
-% Note: all units of distance in this file are in millimeters,
-%
-
-% major: defines the spacing, in mm, between each major-line of the graph paper.
-/major 30 def
-
-% minor: defines the number of minor-lines to print for each major-line.
-/minor 10 def
-
-% majorWidth and minorWidth: define the width, in mm, of each major and minor line, respectively.
-% 0 (zero) is a special value representing a "hairline", which is the thinnest possible
-% line that the PostScript device is able to render.  I highly recommend using this for
-% precise graphpaper.
-/majorWidth 0 def
-/minorWidth 0 def
-
-% majorGray and minorGray: define the shade of gray to use for major and minor lines, respectively.
-% 0 is black, 1 is white, and everything else is in-between.  Some printers don't print arbitrary
-% shades of gray very well, so I recommend sticking with 0.0 or 0.5.
-/majorGray 0.0 def
-/minorGray 0.5 def
-
-% pageWidth and pageHeight: define the width and height of the page in mm, respectively.
-% currently set for A4 (210 by 297)
-% 8.5in by 11in is (215.9 by 279.4)
-/pageWidth 210 def
-/pageHeight 297 def
-
-
-% scale for metric units
-254 72 div dup scale
-
-% params: x, y, lineWidth, gray
-/drawLine {
-  gsave
-  setgray
-  setlinewidth
-  rlineto
-  closepath
-  stroke
-  grestore
-} bind def
-
-gsave
-0 major pageHeight {
-  1 1 minor 1 sub {
-    /i exch def
-    /y i minor div major mul def
-    0 y moveto
-    pageWidth 0 minorWidth minorGray drawLine
-  } for
-  0 0 moveto
-  pageWidth 0 majorWidth majorGray drawLine
-  0 major translate
-} for
-grestore
-
-0 major pageWidth {
-  1 1 minor 1 sub {
-    /i exch def
-    /x i minor div major mul def
-    x 0 moveto
-    0 pageHeight minorWidth minorGray drawLine
-  } for
-  0 0 moveto
-  0 pageHeight majorWidth majorGray drawLine
-  major 0 translate
-} for
-
-stroke
-showpage
-quit
+%!
+
+%
+% graphpaper.ps  version 1.0
+% (c) 2001 Jason Pratt; All rights reserved
+% Free to use and redistribute.
+% http://www.jasonpratt.org/software/graphpaper/
+%
+
+%
+% How to use this program:
+%
+% Send it to a printer.  The printer will know what to do.
+%
+% On Windows: Start->Settings->Printers, then drag this file onto
+%             a printer icon.  If that doesn't work, try downloading
+%             this program: http://www.cs.wisc.edu/~ghost/
+% On UNIX: lpr [-Pprinter] graphpaper.ps
+% On Macintosh: If you have a printer icon on your desktop, drag
+%               graphpaper.ps onto it.  Or, try this:
+%               select graphpaper.ps, then click File->Print.
+%               If those don't work, try downloading this program:
+%               http://www.cs.wisc.edu/~ghost/
+%
+% If you have better instructions for printing postscript on any
+% platform, please let me know: jason@jasonpratt.org
+%
+%
+% If you're feeling frisky, you can play with the options below
+%
+
+
+%
+% Note: all units of distance in this file are in millimeters,
+%
+
+% major: defines the spacing, in mm, between each major-line of the graph paper.
+/major 30 def
+
+% minor: defines the number of minor-lines to print for each major-line.
+/minor 10 def
+
+% majorWidth and minorWidth: define the width, in mm, of each major and minor line, respectively.
+% 0 (zero) is a special value representing a "hairline", which is the thinnest possible
+% line that the PostScript device is able to render.  I highly recommend using this for
+% precise graphpaper.
+/majorWidth 0 def
+/minorWidth 0 def
+
+% majorGray and minorGray: define the shade of gray to use for major and minor lines, respectively.
+% 0 is black, 1 is white, and everything else is in-between.  Some printers don't print arbitrary
+% shades of gray very well, so I recommend sticking with 0.0 or 0.5.
+/majorGray 0.0 def
+/minorGray 0.5 def
+
+% pageWidth and pageHeight: define the width and height of the page in mm, respectively.
+% currently set for A4 (210 by 297)
+% 8.5in by 11in is (215.9 by 279.4)
+/pageWidth 210 def
+/pageHeight 297 def
+
+
+% scale for metric units
+254 72 div dup scale
+
+% params: x, y, lineWidth, gray
+/drawLine {
+  gsave
+  setgray
+  setlinewidth
+  rlineto
+  closepath
+  stroke
+  grestore
+} bind def
+
+gsave
+0 major pageHeight {
+  1 1 minor 1 sub {
+    /i exch def
+    /y i minor div major mul def
+    0 y moveto
+    pageWidth 0 minorWidth minorGray drawLine
+  } for
+  0 0 moveto
+  pageWidth 0 majorWidth majorGray drawLine
+  0 major translate
+} for
+grestore
+
+0 major pageWidth {
+  1 1 minor 1 sub {
+    /i exch def
+    /x i minor div major mul def
+    x 0 moveto
+    0 pageHeight minorWidth minorGray drawLine
+  } for
+  0 0 moveto
+  0 pageHeight majorWidth majorGray drawLine
+  major 0 translate
+} for
+
+stroke
+showpage
+quit

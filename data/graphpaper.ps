@@ -1,105 +1,187 @@
-%!
-
+%!PS-Adobe-1.0
+%%Title: graph-paper - part of rpgTools by Elena of Valhalla
+%%Pages:1
+%%BoundingBox: 0 0 596 842
+%%DocumentPaperSizes: a4
+%%CreationDate: 2004/10/19
+%%DocumentData: Clean7Bit
+%%LanguageLevel: 1
+%%EndComments
+%%BeginProlog
+% Copyright (C) 2004 Elena Grandi
+% All rights reserved.
 %
-% graphpaper.ps  version 1.0
-% (c) 2001 Jason Pratt; All rights reserved
-% Free to use and redistribute.
-% http://www.jasonpratt.org/software/graphpaper/
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions are met:
 %
-
+% * Redistributions of source code must retain the above copyright
+%   notice, this list of conditions and the following disclaimer.
+% * Redistributions in binary form must reproduce the above copyright
+%   notice, this list of conditions and the following disclaimer in the
+%   documentation and/or other materials provided with the distribution.
+% * Neither the name of the <organization> nor the
+%   names of its contributors may be used to endorse or promote products
+%   derived from this software without specific prior written permission.
 %
-% How to use this program:
-%
-% Send it to a printer.  The printer will know what to do.
-%
-% On Windows: Start->Settings->Printers, then drag this file onto
-%             a printer icon.  If that doesn't work, try downloading
-%             this program: http://www.cs.wisc.edu/~ghost/
-% On UNIX: lpr [-Pprinter] graphpaper.ps
-% On Macintosh: If you have a printer icon on your desktop, drag
-%               graphpaper.ps onto it.  Or, try this:
-%               select graphpaper.ps, then click File->Print.
-%               If those don't work, try downloading this program:
-%               http://www.cs.wisc.edu/~ghost/
-%
-% If you have better instructions for printing postscript on any
-% platform, please let me know: jason@jasonpratt.org
-%
-%
-% If you're feeling frisky, you can play with the options below
-%
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY
+% DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+% (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+% LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+% ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+% (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+% ------ Usage ----------------------------------------------------------------
+ 
+% To use this file either send it to a postscript printer, or use your
+% favourite postscript interpreter to visualize and print it.
+ 
+% You can customize the result by changing the values in the Settings
+% section below (see the comments for details)
+ 
+% ------ sizes ----------------------------------------------------------------
+% This will allow you to give measurements in inches or millimiters
+% do not change
+/inch {72 mul} def
+/mm {0.03937 inch mul} def
+ 
+% ------ Settings -------------------------------------------------------------
+ 
+% ------ Basic settings
 
-%
-% Note: all units of distance in this file are in millimeters,
-%
+/SquaXLen   2 mm def           % hor spacing between lines
+/SquaYLen   2 mm def           % ver spacing between lines
 
-% major: defines the spacing, in mm, between each major-line of the graph paper.
-/major 30 def
+/SquaXStr   5 def         % hor number of thin lines between strong ones
+/SquaYStr   5 def         % ver number of thin lines between strong ones
 
-% minor: defines the number of minor-lines to print for each major-line.
-/minor 10 def
+% line width and color for thin lines
+/LineSizeThin 0.5 def
+/LineColoThin { 0.85 0.85 0.85 } def
+% line width and color for strong lines
+/LineSizeStro 0.5 def
+/LineColoStro { 0.75 0.75 0.75 } def
+% line width and color for border
+/LineSizeBord 0.5 def
+/LineColoBord { 0.75 0.75 0.75 } def
 
-% majorWidth and minorWidth: define the width, in mm, of each major and minor line, respectively.
-% 0 (zero) is a special value representing a "hairline", which is the thinnest possible
-% line that the PostScript device is able to render.  I highly recommend using this for
-% precise graphpaper.
-/majorWidth 0 def
-/minorWidth 0 def
+/BackColo { 1.0 1.0 1.0 } def  % background color
 
-% majorGray and minorGray: define the shade of gray to use for major and minor lines, respectively.
-% 0 is black, 1 is white, and everything else is in-between.  Some printers don't print arbitrary
-% shades of gray very well, so I recommend sticking with 0.0 or 0.5.
-/majorGray 0.0 def
-/minorGray 0.5 def
+% page size: if you change this, you should change the BoundingBox
+% in line 4 accordingly (you CAN'T use mm or inch over there)
+/PageWidth  210 mm def
+/PageHeight 297 mm def
+ 
+% white margins
+/BorderTop 10 mm def
+/BorderBottom 10 mm def
+/BorderLeft 10 mm def
+/BorderRight 10 mm def
 
-% pageWidth and pageHeight: define the width and height of the page in mm, respectively.
-% currently set for A4 (210 by 297)
-% 8.5in by 11in is (215.9 by 279.4)
-/pageWidth 210 def
-/pageHeight 297 def
+% ------ Advanced settings
 
+% translation of the starting point of the pattern
+/PattTrasX 0 mm def
+/PattTrasY 7 mm def
 
-% scale for metric units
-254 72 div dup scale
+% ------ Behaviour
+ 
+% Whether to print a line around the margins (1) or not (0)
+/WillPrintBorder 1 def
+ 
+% From here on you shouldn't worry about changing or configuring anything
+% ------ Variables ------------------------------------------------------------
 
-% params: x, y, lineWidth, gray
-/drawLine {
-  gsave
-  setgray
-  setlinewidth
-  rlineto
+% number of vert and hor lines
+/SquaXNum PageWidth BorderLeft sub BorderRight sub SquaXLen div def
+/SquaYNum PageHeight BorderTop sub BorderBottom sub SquaYLen div def
+
+% starting vert and hor line num
+/SquaXSta PattTrasX SquaXLen div cvi neg def
+/SquaYSta PattTrasY SquaYLen div cvi neg def
+
+% ending vert and hor line num
+/SquaXEnd SquaXNum SquaXSta add def
+/SquaYEnd SquaYNum SquaYSta add def
+
+% ------ Procedures -----------------------------------------------------------
+ 
+% Describes the printable area (does NOT print anything)
+/UsedArea {
+  newpath
+  BorderLeft BorderBottom moveto
+  BorderLeft PageHeight BorderTop sub lineto
+  PageWidth BorderRight sub PageHeight BorderTop sub lineto
+  PageWidth BorderRight sub BorderBottom lineto
   closepath
-  stroke
-  grestore
-} bind def
+} def
 
-gsave
-0 major pageHeight {
-  1 1 minor 1 sub {
-    /i exch def
-    /y i minor div major mul def
-    0 y moveto
-    pageWidth 0 minorWidth minorGray drawLine
+%%EndProlog
+%%Page: 1
+
+% set printing area
+UsedArea clip
+ 
+% print background
+BackColo setrgbcolor
+UsedArea fill
+
+% print hor thin line pattern
+newpath
+  SquaXSta 1 SquaXEnd { %for
+    SquaXLen mul BorderLeft add PattTrasX add BorderBottom moveto
+    0 PageHeight BorderTop sub BorderBottom sub rlineto
   } for
-  0 0 moveto
-  pageWidth 0 majorWidth majorGray drawLine
-  0 major translate
-} for
-grestore
-
-0 major pageWidth {
-  1 1 minor 1 sub {
-    /i exch def
-    /x i minor div major mul def
-    x 0 moveto
-    0 pageHeight minorWidth minorGray drawLine
-  } for
-  0 0 moveto
-  0 pageHeight majorWidth majorGray drawLine
-  major 0 translate
-} for
-
+  LineSizeThin setlinewidth
+  LineColoThin setrgbcolor
 stroke
+
+% print hor strong line pattern
+newpath
+  SquaXSta 1 SquaXEnd { %for
+    dup
+    SquaXStr mod 0 eq { %if
+      SquaXLen mul BorderLeft add PattTrasX add BorderBottom moveto
+      0 PageHeight BorderTop sub BorderBottom sub rlineto
+    } if
+  } for
+  LineSizeStro setlinewidth
+  LineColoStro setrgbcolor
+stroke
+
+% print vert thin line pattern
+newpath
+  SquaYSta 1 SquaYEnd { %for
+    SquaYLen mul BorderBottom add PattTrasY add BorderLeft exch moveto
+    PageWidth BorderLeft sub BorderRight sub 0 rlineto
+  } for
+  LineSizeThin setlinewidth
+  LineColoThin setrgbcolor
+stroke
+
+% print vert strong line pattern
+newpath
+  SquaYSta 1 SquaYEnd { %for
+    dup
+    SquaYStr mod 0 eq { %if
+      SquaYLen mul BorderBottom add PattTrasY add BorderLeft exch moveto
+      PageWidth BorderLeft sub BorderRight sub 0 rlineto
+    } if
+  } for
+  LineSizeStro setlinewidth
+  LineColoStro setrgbcolor
+stroke
+
+
+% print border (if WillPrintBorder is not 0 )
+WillPrintBorder 0 ne {
+  LineSizeBord setlinewidth
+  LineColoBord setrgbcolor
+  UsedArea stroke
+} if
+
 showpage
-quit
+%%Trailer

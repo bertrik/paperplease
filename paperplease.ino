@@ -8,14 +8,12 @@
 #define PRINTER_HOST    "10.42.42.202"
 #define PRINTER_PORT    9100
 
-#define PIN_BUTTON_EMPTYPAGE    D1
-#define PIN_BUTTON_GRAPHPAPER   D2
+#define PIN_BUTTON_GRAPHPAPER   D1
 
 static WiFiClient client;
 
 void setup(void)
 {
-    pinMode(PIN_BUTTON_EMPTYPAGE, INPUT_PULLUP);
     pinMode(PIN_BUTTON_GRAPHPAPER, INPUT_PULLUP);
 
     Serial.begin(115200);
@@ -64,20 +62,6 @@ static boolean print_file(const char *filename, Stream &stream)
 
 void loop(void)
 {
-    if (digitalRead(PIN_BUTTON_EMPTYPAGE) == 0) {
-        Serial.print("Button pressed, dispensing empty paper ...");
-        if (client.connect(PRINTER_HOST, PRINTER_PORT)) {
-            client.print(char(0x0c));
-            client.flush();
-            client.stop();
-            Serial.println("done");
-        } else {
-            Serial.println("failed");
-        }
-        delay(50);
-        while (digitalRead(PIN_BUTTON_EMPTYPAGE) == 0);
-        delay(50);
-    }
     if (digitalRead(PIN_BUTTON_GRAPHPAPER) == 0) {
         Serial.print("Button pressed, dispensing graph paper ...");
         if (client.connect(PRINTER_HOST, PRINTER_PORT)) {

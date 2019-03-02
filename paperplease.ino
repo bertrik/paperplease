@@ -5,7 +5,7 @@
 #include <ESP8266WiFi.h>
 
 //#define PRINTER_HOST    "192.168.8.179"
-#define PRINTER_HOST    "10.42.42.202"
+#define PRINTER_HOST    "10.42.44.213"
 #define PRINTER_PORT    9100
 
 #define PIN_BUTTON_GRAPHPAPER   D1

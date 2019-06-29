@@ -18,7 +18,7 @@ void setup(void)
 
     Serial.begin(115200);
     Serial.println("Papiertje");
-    
+
     SPIFFS.begin();
 
     WiFi.begin("revspace-pub-2.4ghz");
@@ -26,24 +26,23 @@ void setup(void)
 
 #define PJL_ESCAPE "\x1b%-12345X"
 
-static boolean print_file(const char *filename, Stream &stream)
+static boolean print_file(const char *filename, Stream & stream)
 {
     char buffer[512];
 
     // get file
     File f = SPIFFS.open(filename, "r");
     if (!f) {
-        Serial.print("Could not open file "); 
+        Serial.print("Could not open file ");
         Serial.println(filename);
         return false;
     }
-
     // PJL header to enter postscript
     stream.print(PJL_ESCAPE);
     stream.print("@PJL JOB NAME=\"graphpaper\"\r\n");
     stream.print("@PJL SET PAPER=A4\r\n");
     stream.print("@PJL ENTER LANGUAGE=POSTSCRIPT\r\n");
-    
+
     // write postscript file contents
     size_t read = 0;
     do {
@@ -77,4 +76,3 @@ void loop(void)
         delay(50);
     }
 }
-
